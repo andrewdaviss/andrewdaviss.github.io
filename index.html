@@ -2,13 +2,20 @@
 <html>
   <head>
     <title>Andrew's Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
       body {
         background-color: #1a1a2e;
         color: white;
         font-family: Arial, sans-serif;
         text-align: center;
-        padding: 50px;
+        padding: 30px 20px;
         transition: background-color 0.3s, color 0.3s;
       }
 
@@ -20,43 +27,63 @@
       h1 {
         font-size: 48px;
         color: #00d4ff;
+        margin-bottom: 15px;
       }
 
       body.light h1 {
         color: #0077aa;
       }
 
+      h2 {
+        margin-bottom: 10px;
+      }
+
       p {
         font-size: 18px;
         color: #cccccc;
+        margin: 8px 0;
       }
 
       body.light p {
         color: #333333;
       }
 
-      .card {
+      img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 15px auto;
+        display: block;
+      }
+
+      .card, .contact-card {
         background-color: #16213e;
         border-radius: 10px;
         padding: 20px;
-        width: 400px;
+        width: 90%;
+        max-width: 400px;
         margin: 20px auto;
       }
 
-      body.light .card {
+      body.light .card,
+      body.light .contact-card {
         background-color: #ffffff;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       }
 
       .social-links {
         margin: 20px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
       }
 
       .social-links a {
         color: #00d4ff;
         text-decoration: none;
-        margin: 0 15px;
-        font-size: 18px;
+        font-size: 16px;
         border: 1px solid #00d4ff;
         padding: 8px 16px;
         border-radius: 20px;
@@ -79,39 +106,28 @@
 
       .toggle-btn {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 15px;
+        right: 15px;
         background: #00d4ff;
         color: #1a1a2e;
         border: none;
-        padding: 10px 18px;
+        padding: 8px 14px;
         border-radius: 20px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
+        z-index: 999;
       }
 
       .toggle-btn:hover {
         opacity: 0.8;
       }
 
-      .contact-card {
-        background-color: #16213e;
-        border-radius: 10px;
-        padding: 20px;
-        width: 400px;
-        margin: 20px auto;
-      }
-
-      body.light .contact-card {
-        background-color: #ffffff;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      }
-
       .contact-card a {
         color: #00d4ff;
-        font-size: 18px;
+        font-size: 16px;
         text-decoration: none;
+        word-break: break-all;
       }
 
       body.light .contact-card a {
@@ -121,6 +137,21 @@
       .contact-card a:hover {
         text-decoration: underline;
       }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 32px;
+        }
+
+        p {
+          font-size: 15px;
+        }
+
+        img {
+          width: 140px;
+          height: 140px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -128,7 +159,7 @@
     <button class="toggle-btn" onclick="toggleMode()">🌙 Dark</button>
 
     <h1>Hi, I'm Andrew!</h1>
-    <img src="1776442365523.jpg" alt="Andrew" width="200" style="border-radius: 50%;">
+    <img src="1776442365523.jpg" alt="Andrew">
     <p>Welcome to my website.</p>
 
     <div class="card">
