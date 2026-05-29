@@ -24,14 +24,14 @@
     }
 
     #board {
-  display: inline-grid;
-  grid-template-columns: repeat(8, 1fr);
-  border: 3px solid #00d4ff;
-  border-radius: 4px;
-  overflow: hidden;
-  width: min(480px, 95vw, 95vh);
-  height: min(480px, 95vw, 95vh);
-}
+      display: inline-grid;
+      grid-template-columns: repeat(8, 1fr);
+      border: 3px solid #00d4ff;
+      border-radius: 4px;
+      overflow: hidden;
+      width: min(480px, 95vw, 95vh);
+      height: min(480px, 95vw, 95vh);
+    }
 
     .square {
       width: 100%;
@@ -43,6 +43,16 @@
       cursor: pointer;
       user-select: none;
       transition: background-color 0.15s;
+    }
+
+    .square .white-piece {
+      color: #ffffff;
+      text-shadow: 0 0 3px #000000;
+    }
+
+    .square .black-piece {
+      color: #1a1a2e;
+      text-shadow: 0 0 3px #ffffff;
     }
 
     .light { background-color: #f0d9b5; }
@@ -223,7 +233,6 @@ function applyMove(r, c, nr, nc) {
     else capturedWhite.push(board[nr][nc]);
   }
 
-  // en passant capture
   if (type === 'P' && enPassant && nr === enPassant[0] && nc === enPassant[1]) {
     const capRow = col === 'w' ? nr+1 : nr-1;
     if (col === 'w') capturedBlack.push(board[capRow][nc]);
@@ -231,7 +240,6 @@ function applyMove(r, c, nr, nc) {
     board[capRow][nc] = null;
   }
 
-  // castling move
   if (type === 'K') {
     if (nc === 6) { board[r][5] = board[r][7]; board[r][7] = null; }
     if (nc === 2) { board[r][3] = board[r][0]; board[r][0] = null; }
@@ -247,7 +255,6 @@ function applyMove(r, c, nr, nc) {
   board[nr][nc] = p;
   board[r][c] = null;
 
-  // pawn promotion
   if (type === 'P' && (nr === 0 || nr === 7)) board[nr][nc] = col+'Q';
 
   turn = enemy(col);
@@ -270,7 +277,12 @@ function render() {
       if (selected && selected[0]===r && selected[1]===c) sq.classList.add('selected');
       if (validMoves.some(([mr,mc])=>mr===r&&mc===c)) sq.classList.add('valid-move');
       if (inCheck && r===kingR && c===kingC) sq.classList.add('in-check');
-      if (board[r][c]) sq.textContent = PIECES[board[r][c]];
+      if (board[r][c]) {
+        const span = document.createElement('span');
+        span.textContent = PIECES[board[r][c]];
+        span.className = color(board[r][c]) === 'w' ? 'white-piece' : 'black-piece';
+        sq.appendChild(span);
+      }
       sq.addEventListener('click', () => handleClick(r, c));
       el.appendChild(sq);
     }
